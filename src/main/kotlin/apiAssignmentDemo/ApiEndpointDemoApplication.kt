@@ -114,28 +114,33 @@ fun defineEligibleProjects (proScore: Int): ProEvaluation {
 		mutableListOf()
 	)
 
-	//List of possible projects, sorted by their required score
-	val projects = listOf(
-		"Calculate the Dark Matter of the universe for Nasa",
-		"Determine if the Schrodinger's cat is alive",
-		"Attend to users support for a YXZ Company",
-		"Collect specific people information from their social media for XPTO Company"
+	//List of possible projects, first element is the project name while
+	//the second element is the score required to be eligible for it
+	val projects = mutableListOf(
+		Pair("Calculate the Dark Matter of the universe for Nasa", 10),
+		Pair("Determine if the Schrodinger's cat is alive", 5),
+		Pair("Attend to users support for a YXZ Company", 3),
+		Pair("Collect specific people information from their social media for XPTO Company", 2)
 	)
+
+	projects.sortByDescending { it.second } //Sorts the project list based on the score required
 
 	var bestProject = projects.size //Identifies the first critical project available
 
 	//Decides which project to pair the Pro with based on their eligibility score
-	if (proScore > 10) bestProject = 0
-	else if (proScore > 5) bestProject = 1
-	else if (proScore > 3) bestProject = 2
-	else if (proScore > 2) bestProject = 3
+	for (i in projects.indices) {
+		if (proScore > projects[i].second) {
+			bestProject = i
+			break
+		}
+	}
 
 	//Separates the available project based on whether the Pro is eligible for them or not
-	proA.eligible_projects.addAll(projects.subList(bestProject, projects.size))
-	proA.ineligible_projects.addAll(projects.subList(0, bestProject))
+	proA.eligible_projects.addAll(projects.map{ it.first }.subList(bestProject, projects.size))
+	proA.ineligible_projects.addAll(projects.map{ it.first }.subList(0, bestProject))
 
 	//If the Pro is eligible for a project they are paired with the first critical one
-	if (bestProject < projects.size) proA.selected_project = projects[bestProject]
+	if (bestProject < projects.size) proA.selected_project = projects[bestProject].first
 
 	//Returns the Pro's final score and their situation regarding the available projects
 	return proA
