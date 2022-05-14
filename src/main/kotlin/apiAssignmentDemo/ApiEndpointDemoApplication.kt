@@ -50,9 +50,14 @@ class PayloadHandler {
 		eligible_projects = mutableListOf()
 	)
 
+	var showOutput = false //Whether the GET request will show the latest output
+
 	//Handles GET requests, outputting a Pro's final results
 	@GetMapping
-	fun output(): ProEvaluation = proResult
+	fun output(): ProEvaluation? {
+		if (showOutput) return proResult
+		return null
+	}
 
 	//Handles POST requests, receiving a Pro's initial information
 	@PostMapping
@@ -60,6 +65,7 @@ class PayloadHandler {
 		proResult = defineEligibleProjects( //Returns a Pro's final evaluation with their paired project
 			defineEligibilityScore(proInput) //Defines the eligibility score of a Pro
 		)
+		showOutput = true
 	}
 }
 
@@ -117,10 +123,10 @@ fun defineEligibleProjects (proScore: Int): ProEvaluation {
 	//List of possible projects, first element is the project name while
 	//the second element is the score required to be eligible for it
 	val projects = mutableListOf(
-		Pair("Calculate the Dark Matter of the universe for Nasa", 10),
-		Pair("Determine if the Schrodinger's cat is alive", 5),
-		Pair("Attend to users support for a YXZ Company", 3),
-		Pair("Collect specific people information from their social media for XPTO Company", 2)
+		Pair("calculate_dark_matter_nasa", 10),
+		Pair("determine_schrodinger_cat_is_alive", 5),
+		Pair("support_users_from_xyz", 3),
+		Pair("collect_information_for_xpto", 2)
 	)
 
 	projects.sortByDescending { it.second } //Sorts the project list based on the score required
@@ -145,20 +151,3 @@ fun defineEligibleProjects (proScore: Int): ProEvaluation {
 	//Returns the Pro's final score and their situation regarding the available projects
 	return proA
 }
-
-/*
-Notes for next time:
-spring intializr dependency used: Spring Web
-gradle project
-spring boot 2.6.7
-jar packaging
-java 18
-This project uses Gradle, Kotlin and Spring Web
-
-Ask these things:
-If a Pro is underage, does their score just get set to 0 or is it a special clause?
-Can underage be assumed to be <18?
-Is the value "token1234" to be taken as the only valid one?
-Is it necessary to check for error or can I assume the input is always correct?
-Project names in algorithm and output sections are different, which one should I use?
- */
