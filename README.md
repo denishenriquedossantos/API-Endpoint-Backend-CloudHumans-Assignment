@@ -1,7 +1,7 @@
 # API-Endpoint-Backend-CloudHumans-Assignment
 This is an attempt at solving the Backend Take Home Assignment proposed by Cloud Humans utilizing the Kotlin language.
 
-This project is an attempt at solving the [Cloud Humans Take Home Assignment](https://github.com/cloudhumans/backend-take-home) bby creating a simple API endpoint that receives a JSON payload containing a Pro's information and returns another indicating which project they have been paired with along with which ones they are eligible to work on and which ones they're not.
+This project is an attempt at solving the [Cloud Humans Take Home Assignment](https://github.com/cloudhumans/backend-take-home) by creating a simple API endpoint that receives a JSON payload containing a Pro's information and returns another indicating which project they have been paired with along with which ones they are eligible to work on and which ones they're not.
 
 ## How to run it
 A simple way to run this project is through the use of JetBrain's [Intellij IDEA](https://www.jetbrains.com/idea/):
